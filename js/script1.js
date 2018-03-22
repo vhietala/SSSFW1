@@ -6,6 +6,7 @@ const prevButton = document.getElementById('previous-sort');
 const nextButton = document.getElementById('next-sort');
 let picArray = [];
 //const googleAPIkey = 'AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
+const filteredArray = [];
 
 const fillDiv = (itemsArray) => {
   for (let item of itemsArray) {
@@ -68,6 +69,7 @@ const addCategoryButtons = (items) => {
   buttonAll.addEventListener('click', (evt) => {
     clearContainer();
     fillDiv(this.picArray);
+    this.filteredArray = this.picArray;
   });
   document.querySelector(categoryButtonsDiv).appendChild(buttonAll);
 
@@ -87,7 +89,8 @@ const addCategoryButtons = (items) => {
     button.addEventListener('click', (evt) => {
       console.log(evt.target);
       clearContainer();
-      fillDiv(this.picArray.filter(c => c.category === item));
+      this.filteredArray = this.picArray.filter(c => c.category === item);
+      fillDiv(this.filteredArray);
       console.log(item.title);
     });
     document.querySelector(categoryButtonsDiv).appendChild(button);
@@ -103,6 +106,7 @@ fetch('pics.json').then(res => {
   console.log(this.picArray);
   fillDiv(this.picArray);
   addCategoryButtons(this.picArray);
+  this.filteredArray = this.picArray;
 });
 
 span.onclick = () => {
@@ -140,7 +144,7 @@ prevButton.addEventListener('click', () => {
   } else {
     sortIndex -= 1;
   }
-  const items = this.picArray.sort(dynamicSort(sorter[sortIndex]));
+  const items = this.filteredArray.sort(dynamicSort(sorter[sortIndex]));
   clearContainer();
   document.getElementById('sort-text').innerHTML = sorter[sortIndex];
   fillDiv(items);
@@ -153,7 +157,7 @@ nextButton.addEventListener('click', () => {
   } else {
     sortIndex += 1;
   }
-  const items = this.picArray.sort(dynamicSort(sorter[sortIndex]));
+  const items = this.filteredArray.sort(dynamicSort(sorter[sortIndex]));
   clearContainer();
   document.getElementById('sort-text').innerHTML = sorter[sortIndex];
   fillDiv(items);
