@@ -5,7 +5,7 @@ const closeButton = document.getElementById('close-button');
 const prevButton = document.getElementById('previous-sort');
 const nextButton = document.getElementById('next-sort');
 let picArray = [];
-const googleAPIkey = 'AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
+//const googleAPIkey = 'AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
 
 const fillDiv = (itemsArray) => {
   for (let item of itemsArray) {
