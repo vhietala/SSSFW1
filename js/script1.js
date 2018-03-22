@@ -5,7 +5,7 @@ const closeButton = document.getElementById('close-button');
 const prevButton = document.getElementById('previous-sort');
 const nextButton = document.getElementById('next-sort');
 let picArray = [];
-const googleAPIkey='AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
+const googleAPIkey = 'AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
 
 const fillDiv = (itemsArray) => {
   for (let item of itemsArray) {
@@ -14,14 +14,18 @@ const fillDiv = (itemsArray) => {
     const title = document.createElement('h1');
     const details = document.createElement('p');
     const button = document.createElement('button');
+    const date = document.createElement('p');
     img.src = item.thumbnail;
     div.className = 'kitten';
     title.textContent = item.title;
     details.textContent = item.details;
     button.textContent = 'View';
+    const imgDate = new Date(item.time);
+    date.textContent = imgDate.toLocaleDateString();
     div.appendChild(img);
     div.appendChild(title);
     div.appendChild(details);
+    div.appendChild(date);
     div.appendChild(button);
     button.addEventListener('click', (evt) => {
       console.log(evt.target);
@@ -29,19 +33,16 @@ const fillDiv = (itemsArray) => {
       document.getElementById('modal-header').innerHTML = item.title;
       modal.style.display = 'block';
 
-      let map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: item.coordinates.lat, lng: item.coordinates.lng},
-          zoom: 8
-        });
-      }
-
       console.log(item.title);
     });
     document.querySelector(container).appendChild(div);
   }
 };
+
+// const initMap = new google.maps.Map(document.getElementById('modal-map'), {
+//   center: {lat: -34.397, lng: 150.644},
+//   zoom: 8
+// });
 
 const dynamicSort = (property) => {
   let sortOrder = 1;
@@ -59,6 +60,41 @@ const dynamicSort = (property) => {
   };
 };
 
+const categoryButtonsDiv = '.category-buttons';
+
+const addCategoryButtons = (items) => {
+  const buttonAll = document.createElement('button');
+  buttonAll.textContent = 'All';
+  buttonAll.addEventListener('click', (evt) => {
+    clearContainer();
+    fillDiv(this.picArray);
+  });
+  document.querySelector(categoryButtonsDiv).appendChild(buttonAll);
+
+  const itemCategories = items.map(item => item.category).
+      sort().
+      reduce((accumulator, current) => {
+        const length = accumulator.length;
+        if (length === 0 || accumulator[length - 1] !== current) {
+          accumulator.push(current);
+        }
+        return accumulator;
+      }, []);
+  console.log(itemCategories);
+  for (let item of itemCategories) {
+    const button = document.createElement('button');
+    button.textContent = item;
+    button.addEventListener('click', (evt) => {
+      console.log(evt.target);
+      clearContainer();
+      fillDiv(this.picArray.filter(c => c.category === item));
+      console.log(item.title);
+    });
+    document.querySelector(categoryButtonsDiv).appendChild(button);
+
+  }
+};
+
 fetch('pics.json').then(res => {
   return res.json();
 }).then(data => {
@@ -66,6 +102,7 @@ fetch('pics.json').then(res => {
   this.picArray = data;
   console.log(this.picArray);
   fillDiv(this.picArray);
+  addCategoryButtons(this.picArray);
 });
 
 span.onclick = () => {
@@ -77,16 +114,16 @@ closeButton.onclick = () => {
 };
 
 window.onclick = (event) => {
-  if (event.target == modal) {
+  if (event.target === modal) {
     modal.style.display = 'none';
   }
+
 };
 
 let sortIndex = 0;
 const sorter = ['id', 'category', 'time'];
 
 document.getElementById('sort-text').innerHTML = sorter[sortIndex];
-
 
 const container = '.container';
 const modalImage = '.modal-image';
@@ -98,7 +135,7 @@ const clearContainer = () => {
 };
 
 prevButton.addEventListener('click', () => {
-  if (sortIndex == 0) {
+  if (sortIndex === 0) {
     sortIndex = length - 1;
   } else {
     sortIndex -= 1;
@@ -111,7 +148,7 @@ prevButton.addEventListener('click', () => {
 });
 
 nextButton.addEventListener('click', () => {
-  if (sortIndex == length-1) {
+  if (sortIndex === length - 1) {
     sortIndex = 0;
   } else {
     sortIndex += 1;
