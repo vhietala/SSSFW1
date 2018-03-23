@@ -8,7 +8,7 @@ let picArray = [];
 const filteredArray = [];
 
 const fillDiv = itemsArray => {
-  for (let item of itemsArray) {
+  for (const item of itemsArray) {
     const div = document.createElement('div');
     const img = document.createElement('img');
     const title = document.createElement('h1');
