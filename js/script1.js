@@ -33,18 +33,26 @@ const fillDiv = (itemsArray) => {
       document.querySelector(modalImage).setAttribute('src', item.image);
       document.getElementById('modal-header').innerHTML = item.title;
       modal.style.display = 'block';
-
+      initMap(item.coordinates);
       console.log(item.title);
     });
     document.querySelector(container).appendChild(div);
   }
 };
 
-// const initMap = new google.maps.Map(document.getElementById('modal-map'), {
-//   center: {lat: -34.397, lng: 150.644},
-//   zoom: 8
-// });
+ const initMap =(item) => {
+   const myLatLng = {lat: item.lat, lng: item.lng};
 
+   const map = new google.maps.Map(document.getElementById('modal-map'), {
+     center: myLatLng,
+     zoom: 10
+   });
+   const marker = new google.maps.Marker({
+     position: myLatLng,
+     map: map,
+     title: 'Hello World!'
+   });
+ }
 const dynamicSort = (property) => {
   let sortOrder = 1;
   if (property[0] === '-') {
@@ -130,7 +138,7 @@ const sorter = ['id', 'category', 'time'];
 document.getElementById('sort-text').innerHTML = sorter[sortIndex];
 
 const container = '.container';
-const modalImage = '.modal-image';
+const modalImage = '#modal-image';
 
 const length = sorter.length;
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -27,14 +28,13 @@
 <div id="modal" class="modal">
     <span class="close">&times;</span>
     <h2 id="modal-header">HEADER</h2>
-    <div class="modal-content">
+    <div id="modal-content">
         <div id="modal-map"></div>
-        <img class="modal-image" src="http://placekitten.com/2039/1920">
+        <img id="modal-image" src="http://placekitten.com/2039/1920">
     </div>
     <button id="close-button">Close</button>
 </div>
 <script src="js/script1.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTjil-F5qYUEeuhIWQ6zty8sOoICT5AgU&callback=initMap"
-        async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTjil-F5qYUEeuhIWQ6zty8sOoICT5AgU&callback=initMap"async defer></script>
 </body>
 </html>
