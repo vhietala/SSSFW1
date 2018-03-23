@@ -91,7 +91,7 @@ const addCategoryButtons = items => {
         return accumulator;
       }, []);
   console.log(itemCategories);
-  for (let item of itemCategories) {
+  for (const item of itemCategories) {
     const button = document.createElement('button');
     button.textContent = item;
     button.addEventListener('click', evt => {
@@ -124,7 +124,7 @@ closeButton.onclick = () => {
   modal.style.display = 'none';
 };
 
-window.onclick = (event) => {
+window.onclick = event => {
   if (event.target === modal) {
     modal.style.display = 'none';
   }
