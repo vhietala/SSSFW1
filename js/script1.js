@@ -7,7 +7,7 @@ const nextButton = document.getElementById('next-sort');
 let picArray = [];
 const filteredArray = [];
 
-const fillDiv = (itemsArray) => {
+const fillDiv = itemsArray => {
   for (let item of itemsArray) {
     const div = document.createElement('div');
     const img = document.createElement('img');
@@ -27,7 +27,7 @@ const fillDiv = (itemsArray) => {
     div.appendChild(details);
     div.appendChild(date);
     div.appendChild(button);
-    button.addEventListener('click', (evt) => {
+    button.addEventListener('click', evt => {
       console.log(evt.target);
       document.querySelector(modalImage).setAttribute('src', item.image);
       document.getElementById('modal-header').innerHTML = item.title;
@@ -39,7 +39,7 @@ const fillDiv = (itemsArray) => {
   }
 };
 
-const initMap = (item) => {
+const initMap = item => {
   const myLatLng = {lat: item.coordinates.lat, lng: item.coordinates.lng};
 
   const map = new google.maps.Map(document.getElementById('modal-map'), {
@@ -53,7 +53,7 @@ const initMap = (item) => {
   });
 };
 
-const dynamicSort = (property) => {
+const dynamicSort = property => {
   let sortOrder = 1;
   if (property[0] === '-') {
     sortOrder = -1;
@@ -71,10 +71,10 @@ const dynamicSort = (property) => {
 
 const categoryButtonsDiv = '.category-buttons';
 
-const addCategoryButtons = (items) => {
+const addCategoryButtons = items => {
   const buttonAll = document.createElement('button');
   buttonAll.textContent = 'All';
-  buttonAll.addEventListener('click', (evt) => {
+  buttonAll.addEventListener('click', evt => {
     clearContainer();
     fillDiv(this.picArray);
     this.filteredArray = this.picArray;
@@ -94,7 +94,7 @@ const addCategoryButtons = (items) => {
   for (let item of itemCategories) {
     const button = document.createElement('button');
     button.textContent = item;
-    button.addEventListener('click', (evt) => {
+    button.addEventListener('click', evt => {
       console.log(evt.target);
       clearContainer();
       this.filteredArray = this.picArray.filter(c => c.category === item);
