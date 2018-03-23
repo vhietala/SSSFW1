@@ -5,7 +5,6 @@ const closeButton = document.getElementById('close-button');
 const prevButton = document.getElementById('previous-sort');
 const nextButton = document.getElementById('next-sort');
 let picArray = [];
-//const googleAPIkey = 'AIzaSyC10Jma4fksdVQbg8E-5Qu8UUklkalj8VE\n';
 const filteredArray = [];
 
 const fillDiv = (itemsArray) => {
@@ -33,26 +32,27 @@ const fillDiv = (itemsArray) => {
       document.querySelector(modalImage).setAttribute('src', item.image);
       document.getElementById('modal-header').innerHTML = item.title;
       modal.style.display = 'block';
-      initMap(item.coordinates);
+      initMap(item);
       console.log(item.title);
     });
     document.querySelector(container).appendChild(div);
   }
 };
 
- const initMap =(item) => {
-   const myLatLng = {lat: item.lat, lng: item.lng};
+const initMap = (item) => {
+  const myLatLng = {lat: item.coordinates.lat, lng: item.coordinates.lng};
 
-   const map = new google.maps.Map(document.getElementById('modal-map'), {
-     center: myLatLng,
-     zoom: 10
-   });
-   const marker = new google.maps.Marker({
-     position: myLatLng,
-     map: map,
-     title: 'Hello World!'
-   });
- }
+  const map = new google.maps.Map(document.getElementById('modal-map'), {
+    center: myLatLng,
+    zoom: 10,
+  });
+  const marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: item.title,
+  });
+};
+
 const dynamicSort = (property) => {
   let sortOrder = 1;
   if (property[0] === '-') {
@@ -102,7 +102,6 @@ const addCategoryButtons = (items) => {
       console.log(item.title);
     });
     document.querySelector(categoryButtonsDiv).appendChild(button);
-
   }
 };
 
